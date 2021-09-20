@@ -16,6 +16,7 @@ let left = new Audio();
 let right = new Audio();
 let down = new Audio();
 
+// Подключаем аудио
 eat.src = "audio/eat.mp3";
 up.src = "audio/up.mp3";
 left.src = "audio/left.mp3";
@@ -25,11 +26,11 @@ down.src = "audio/down.mp3";
 // Создаем змею
 let snake = [];
 snake[0] = {
-    x: 9 * box, // Позиция по x
-    y: 10 * box // y
+    x: 9 * box, // Позиция по оси x
+    y: 10 * box // Позиция по оси y
 }
 
-// Создаем еду в случайном месте по координатам x и y
+// Создаем еду в случайном месте по оси координатам x и y
 let food = {
     x: Math.floor(Math.random() * 17 + 1) * box,
     y: Math.floor(Math.random() * 15 + 3) * box
@@ -74,7 +75,7 @@ function collision(head, array) {
 function draw() {
     ctx.drawImage(ground, 0, 0);
 
-    for (let i = 0; i < snake.length; i++) { // Отрисовка всех клеток змъеи
+    for (let i = 0; i < snake.length; i++) { // Отрисовка всех клеток змеи
         ctx.fillStyle = (i == 0) ? "green" : "white"; // Цвет змеиной головы
         ctx.fillRect(snake[i].x, snake[i].y, box, box); // Положение змеиной головы
 
@@ -82,7 +83,7 @@ function draw() {
         ctx.strokeRect(snake[i].x, snake[i].y, box, box); // Положение обводки змеиной головы
     }
 
-    ctx.drawImage(foodImg, food.x, food.y); // Рисуем еду
+    ctx.drawImage(foodImg, food.x, food.y); // Отображаем еду
 
     // Старое положение головы змеи
     let snakeX = snake[0].x;
@@ -94,7 +95,7 @@ function draw() {
     if (d == "RIGHT") snakeX += box;
     if (d == "DOWN") snakeY += box;
 
-    // Если змея ест еду
+    // Если змея ест еду, происходит увеличение счета и еда появляется в случайном месте на заданной области
     if (snakeX == food.x && snakeY == food.y) {
         score++;
         eat.play();
@@ -103,7 +104,7 @@ function draw() {
             y: Math.floor(Math.random() * 15 + 3) * box,
         }
     } else {
-        // Удаление хвоста тела змеи
+        // Удаление хвоста тела змеи, для визуального отображения движения
         snake.pop();
     }
 
@@ -119,7 +120,6 @@ function draw() {
         clearInterval(game);
         location.reload(); // Перезагрузка игры
     }
-
 
     snake.unshift(newHead);
 
